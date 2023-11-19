@@ -24,6 +24,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "lvgl.h"
+#include "lv_port_disp.h"
+#include "lv_demo_benchmark.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -88,6 +92,11 @@ int main(void)
   MX_GPIO_Init();
   MX_FSMC_Init();
   /* USER CODE BEGIN 2 */
+
+  lv_init();
+  lv_port_disp_init();
+
+  lv_demo_benchmark();
 
   /* USER CODE END 2 */
 

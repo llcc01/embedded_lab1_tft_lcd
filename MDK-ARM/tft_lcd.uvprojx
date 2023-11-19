@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx,LV_CONF_INCLUDE_SIMPLE,LV_LVGL_H_INCLUDE_SIMPLE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\lvgl;..\lvgl\src;..\lvgl\porting</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\lvgl;..\lvgl\src;..\lvgl\porting;..\lvgl\demos\benchmark</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -418,6 +418,11 @@
               <FileName>stm32f4xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/stm32f4xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\lcd.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1513,6 +1518,61 @@
               <FileName>lv_extra.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\lvgl\src\extra\lv_extra.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>LVGL/demos/benchmark</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_demo_benchmark.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lvgl\demos\benchmark\lv_demo_benchmark.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_alpha16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lvgl\demos\benchmark\assets\img_benchmark_cogwheel_alpha16.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_argb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lvgl\demos\benchmark\assets\img_benchmark_cogwheel_argb.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_chroma_keyed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lvgl\demos\benchmark\assets\img_benchmark_cogwheel_chroma_keyed.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_indexed16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lvgl\demos\benchmark\assets\img_benchmark_cogwheel_indexed16.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_rgb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lvgl\demos\benchmark\assets\img_benchmark_cogwheel_rgb.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_benchmark_cogwheel_rgb565a8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lvgl\demos\benchmark\assets\img_benchmark_cogwheel_rgb565a8.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_bechmark_montserrat_12_compr_az.c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lvgl\demos\benchmark\assets\lv_font_bechmark_montserrat_12_compr_az.c.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_bechmark_montserrat_16_compr_az.c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lvgl\demos\benchmark\assets\lv_font_bechmark_montserrat_16_compr_az.c.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_bechmark_montserrat_28_compr_az.c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lvgl\demos\benchmark\assets\lv_font_bechmark_montserrat_28_compr_az.c.c</FilePath>
             </File>
           </Files>
         </Group>

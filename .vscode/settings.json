@@ -1,23 +1,28 @@
 {
     "files.associations": {
+        "*.cjson": "jsonc",
+        "*.wxss": "css",
+        "*.wxs": "javascript",
         "gpio.h": "c",
         "main.h": "c",
-        "usart.h": "c"
+        "usart.h": "c",
+        "lv_demos.h": "c"
     },
     "C_Cpp.default.includePath": [
-        "./Inc/*",
-        "./Drivers/STM32F4xx_HAL_Driver/Inc/*",
-        "./Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/*",
-        "./Drivers/CMSIS/Device/ST/STM32F4xx/Include/*",
-        "./Drivers/CMSIS/Include/*",
-        "./lvgl/*",
-        "./lvgl/src/*",
-        "./lvgl/port/*",
+        "./Inc",
+        "./Drivers/STM32F4xx_HAL_Driver/Inc",
+        "./Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+        "./Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+        "./Drivers/CMSIS/Include",
+        "./lvgl",
+        "./lvgl/src",
+        "./lvgl/porting",
+        "./lvgl/demos/benchmark"
     ],
     "C_Cpp.default.defines": [
         "USE_HAL_DRIVER",
         "STM32F407xx",
         "LV_CONF_INCLUDE_SIMPLE",
-        "LV_LVGL_H_INCLUDE_SIMPLE"
+        "LV_LVGL_H_INCLUDE_SIMPLE",
     ]
 }

@@ -12,6 +12,8 @@
 #include "lv_port_disp.h"
 #include <stdbool.h>
 
+#include "lcd.h"
+
 /*********************
  *      DEFINES
  *********************/
@@ -132,6 +134,7 @@ void lv_port_disp_init(void)
 static void disp_init(void)
 {
     /*You code here*/
+    lcd_init();
 }
 
 volatile bool disp_flush_enabled = true;
@@ -160,10 +163,11 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 
         int32_t x;
         int32_t y;
+        LCD_WindowMax(area->x1, area->y1, area->x2, area->y2);
+        write_data_Prepare();
         for(y = area->y1; y <= area->y2; y++) {
             for(x = area->x1; x <= area->x2; x++) {
-                /*Put a pixel to the display. For example:*/
-                /*put_px(x, y, *color_p)*/
+                write_data(color_p->full);
                 color_p++;
             }
         }
