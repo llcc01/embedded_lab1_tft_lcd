@@ -68,4 +68,5 @@ void write_data_Prepare(void);
 void write_data(uint16_t data_code);
 void LCD_Fill(uint8_t xsta, uint16_t ysta, uint8_t xend, uint16_t yend,
               uint16_t colour);
+void lcd_clear(unsigned short Color);
 #endif

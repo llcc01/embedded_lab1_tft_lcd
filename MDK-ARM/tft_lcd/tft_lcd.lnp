@@ -1,11 +1,12 @@
 --cpu=Cortex-M4.fp.sp
 "tft_lcd\startup_stm32f407xx.o"
+"tft_lcd\lcd.o"
 "tft_lcd\main.o"
 "tft_lcd\gpio.o"
 "tft_lcd\fsmc.o"
+"tft_lcd\tim.o"
 "tft_lcd\stm32f4xx_it.o"
 "tft_lcd\stm32f4xx_hal_msp.o"
-"tft_lcd\lcd.o"
 "tft_lcd\stm32f4xx_ll_fsmc.o"
 "tft_lcd\stm32f4xx_hal_rcc.o"
 "tft_lcd\stm32f4xx_hal_rcc_ex.o"

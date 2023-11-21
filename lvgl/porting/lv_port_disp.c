@@ -18,7 +18,7 @@
  *      DEFINES
  *********************/
 #define MY_DISP_HOR_RES    480
-#define MY_DISP_VER_RES    282
+#define MY_DISP_VER_RES    272
 
 /**********************
  *      TYPEDEFS
@@ -167,6 +167,8 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         write_data_Prepare();
         for(y = area->y1; y <= area->y2; y++) {
             for(x = area->x1; x <= area->x2; x++) {
+                // LCD_SetCursor(x, y);
+                // write_data_Prepare();
                 write_data(color_p->full);
                 color_p++;
             }

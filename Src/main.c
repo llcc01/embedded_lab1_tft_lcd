@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 #include "gpio.h"
 #include "fsmc.h"
 
@@ -27,6 +28,7 @@
 #include "lvgl.h"
 #include "lv_port_disp.h"
 #include "lv_demo_benchmark.h"
+#include "lcd.h"
 
 /* USER CODE END Includes */
 
@@ -91,10 +93,15 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_FSMC_Init();
+  MX_TIM2_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
 
   lv_init();
   lv_port_disp_init();
+
+  // HAL_TIM_Base_Start_IT(&htim2); //LED
+  HAL_TIM_Base_Start_IT(&htim3); //LVGL
 
   lv_demo_benchmark();
 
@@ -107,6 +114,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    // lv_tick_inc(1);
+    lv_task_handler();
+    // HAL_Delay(5);
   }
   /* USER CODE END 3 */
 }
