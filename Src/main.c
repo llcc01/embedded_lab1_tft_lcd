@@ -18,8 +18,9 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
 #include "spi.h"
-#include "tim.h"
+#include "usart.h"
 #include "gpio.h"
 #include "fsmc.h"
 
@@ -28,8 +29,9 @@
 
 #include "lvgl.h"
 #include "lv_port_disp.h"
-#include "lv_demo_benchmark.h"
+// #include "lv_demo_benchmark.h"
 #include "lcd.h"
+#include "touch.h"
 
 /* USER CODE END Includes */
 
@@ -93,19 +95,30 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_FSMC_Init();
-  MX_TIM2_Init();
-  MX_TIM3_Init();
   MX_SPI2_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
   lv_init();
   lv_port_disp_init();
 
   // HAL_TIM_Base_Start_IT(&htim2); //LED
-  HAL_TIM_Base_Start_IT(&htim3); //LVGL
+  // HAL_TIM_Base_Start_IT(&htim3); //LVGL
 
-  lv_demo_benchmark();
+  HAL_Delay(100);
+
+  // lv_demo_benchmark();
+
+  lv_obj_t* obj_input = lv_textarea_create(lv_scr_act());
+  lv_obj_set_size(obj_input, LV_PCT(60), LV_PCT(20));
+  lv_obj_align(obj_input, LV_ALIGN_CENTER, 0, 0);
+
+  lv_obj_t* obj_title = lv_label_create(lv_scr_act());
+  lv_label_set_text(obj_title, "Hello World!");
+  lv_obj_align(obj_title, LV_ALIGN_TOP_LEFT, 0, 0);
+
 
   /* USER CODE END 2 */
 
@@ -116,6 +129,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    uint16_t x,y;
+
+    // TODO 读取触摸屏坐标
+    Convert_Pos();
+
+    lv_label_set_text_fmt(obj_title, "Hello World! %d,%d,%d", Pen_Point.X0, Pen_Point.Y0, Pen_Point.Key_Sta);
+
     lv_task_handler();
     HAL_Delay(5);
   }

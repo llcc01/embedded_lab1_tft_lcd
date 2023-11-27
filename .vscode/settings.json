@@ -6,7 +6,8 @@
         "gpio.h": "c",
         "main.h": "c",
         "usart.h": "c",
-        "lv_demos.h": "c"
+        "lv_demos.h": "c",
+        "lv_textarea.h": "c"
     },
     "C_Cpp.default.includePath": [
         "./Inc",

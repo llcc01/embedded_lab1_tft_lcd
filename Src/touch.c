@@ -29,8 +29,8 @@ uint16_t ADS_Read_AD(uint8_t *CMD) {
   uint16_t Date;
   uint8_t Num[3] = {0};
   //	uint8_t send[3] ={CMD,0X00,0x00};
-  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
+  // HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6, GPIO_PIN_SET);
+  // HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
   HAL_GPIO_WritePin(GPIOG, GPIO_PIN_15, GPIO_PIN_RESET);
   Date = 0;
 

@@ -27,7 +27,7 @@ typedef struct {
 
 extern Pen_Holder Pen_Point;
 
-// uint8_t Read_ADS(uint16_t *x,uint16_t *y);
+uint8_t Read_ADS(uint16_t *x,uint16_t *y);
 uint8_t Convert_Pos(void);
 
 #endif

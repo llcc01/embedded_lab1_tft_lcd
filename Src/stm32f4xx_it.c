@@ -59,8 +59,8 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern TIM_HandleTypeDef htim2;
-extern TIM_HandleTypeDef htim3;
+extern DMA_HandleTypeDef hdma_usart1_rx;
+extern DMA_HandleTypeDef hdma_usart1_tx;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -78,7 +78,6 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-
   /* USER CODE END SysTick_IRQn 1 */
 }
 
@@ -90,52 +89,66 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-  * @brief This function handles TIM2 global interrupt.
+  * @brief This function handles EXTI line[9:5] interrupts.
   */
-void TIM2_IRQHandler(void)
+void EXTI9_5_IRQHandler(void)
 {
-  /* USER CODE BEGIN TIM2_IRQn 0 */
-  /* USER CODE END TIM2_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim2);
-  /* USER CODE BEGIN TIM2_IRQn 1 */
-  /* USER CODE END TIM2_IRQn 1 */
+  /* USER CODE BEGIN EXTI9_5_IRQn 0 */
+
+  /* USER CODE END EXTI9_5_IRQn 0 */
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_7);
+  /* USER CODE BEGIN EXTI9_5_IRQn 1 */
+
+  /* USER CODE END EXTI9_5_IRQn 1 */
 }
 
 /**
-  * @brief This function handles TIM3 global interrupt.
+  * @brief This function handles DMA2 stream2 global interrupt.
   */
-void TIM3_IRQHandler(void)
+void DMA2_Stream2_IRQHandler(void)
 {
-  /* USER CODE BEGIN TIM3_IRQn 0 */
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
 
-  /* USER CODE END TIM3_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim3);
-  /* USER CODE BEGIN TIM3_IRQn 1 */
+  /* USER CODE END DMA2_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart1_rx);
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
 
-  /* USER CODE END TIM3_IRQn 1 */
+  /* USER CODE END DMA2_Stream2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA2 stream7 global interrupt.
+  */
+void DMA2_Stream7_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream7_IRQn 0 */
+
+  /* USER CODE END DMA2_Stream7_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart1_tx);
+  /* USER CODE BEGIN DMA2_Stream7_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream7_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
 
-inline void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
-  static uint32_t count = 0;
-  // if (htim->Instance == TIM2) {
-  //   HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, (count & 1) ? GPIO_PIN_RESET : GPIO_PIN_SET); /*点亮 D6 */
-  //   HAL_GPIO_WritePin(GPIOF, GPIO_PIN_8, (count & 2) ? GPIO_PIN_RESET : GPIO_PIN_SET); /*点亮 D7 */
-  //   HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, (count & 4) ? GPIO_PIN_RESET : GPIO_PIN_SET); /*点亮 D8 */
-  //   HAL_GPIO_WritePin(GPIOF, GPIO_PIN_10, (count & 8) ? GPIO_PIN_RESET : GPIO_PIN_SET); /*点亮 D9 */
-  //   count++;
-  // }
-  // else 
-  if (htim->Instance == TIM3) {
-    lv_tick_inc(10);
-  }
-}
+// inline void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
+//   static uint32_t count = 0;
+//   // if (htim->Instance == TIM2) {
+//   //   HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, (count & 1) ? GPIO_PIN_RESET : GPIO_PIN_SET); /*点亮 D6 */
+//   //   HAL_GPIO_WritePin(GPIOF, GPIO_PIN_8, (count & 2) ? GPIO_PIN_RESET : GPIO_PIN_SET); /*点亮 D7 */
+//   //   HAL_GPIO_WritePin(GPIOF, GPIO_PIN_9, (count & 4) ? GPIO_PIN_RESET : GPIO_PIN_SET); /*点亮 D8 */
+//   //   HAL_GPIO_WritePin(GPIOF, GPIO_PIN_10, (count & 8) ? GPIO_PIN_RESET : GPIO_PIN_SET); /*点亮 D9 */
+//   //   count++;
+//   // }
+//   // else 
+//   // if (htim->Instance == TIM3) {
+    
+//   // }
+// }
 
 inline void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-  if (GPIO_Pin == GPIO_PIN_7) {
-    Pen_Point.Key_Sta = HAL_GPIO_ReadPin(GPIOG, GPIO_PIN_7) ? Key_Up : Key_Down;
-  }
+  Pen_Point.Key_Sta = HAL_GPIO_ReadPin(GPIOG, GPIO_PIN_7) ? Key_Up : Key_Down;
 }
 
 /* USER CODE END 1 */
