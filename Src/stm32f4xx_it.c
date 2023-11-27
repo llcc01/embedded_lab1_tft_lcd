@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "lvgl.h"
+#include "touch.h"
 
 /* USER CODE END Includes */
 
@@ -115,7 +116,8 @@ void TIM3_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
+
+inline void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
   static uint32_t count = 0;
   // if (htim->Instance == TIM2) {
   //   HAL_GPIO_WritePin(GPIOF, GPIO_PIN_7, (count & 1) ? GPIO_PIN_RESET : GPIO_PIN_SET); /*点亮 D6 */
@@ -129,4 +131,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
     lv_tick_inc(10);
   }
 }
+
+inline void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+  if (GPIO_Pin == GPIO_PIN_7) {
+    Pen_Point.Key_Sta = HAL_GPIO_ReadPin(GPIOG, GPIO_PIN_7) ? Key_Up : Key_Down;
+  }
+}
+
 /* USER CODE END 1 */
