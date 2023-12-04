@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "dma.h"
+#include "rtc.h"
 #include "spi.h"
 #include "usart.h"
 #include "gpio.h"
@@ -27,11 +28,13 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include <stdio.h>
 #include "lvgl.h"
 #include "lv_port_disp.h"
 // #include "lv_demo_benchmark.h"
 #include "lcd.h"
 #include "touch.h"
+#include "wifi.h"
 
 /* USER CODE END Includes */
 
@@ -99,6 +102,7 @@ int main(void)
   MX_FSMC_Init();
   MX_SPI2_Init();
   MX_USART1_UART_Init();
+  MX_RTC_Init();
   /* USER CODE BEGIN 2 */
 
   lv_init();
@@ -118,6 +122,8 @@ int main(void)
   lv_obj_t* obj_title = lv_label_create(lv_scr_act());
   lv_label_set_text(obj_title, "Hello World!");
   lv_obj_align(obj_title, LV_ALIGN_TOP_LEFT, 0, 0);
+
+  set_wifi();
 
 
   /* USER CODE END 2 */
@@ -159,8 +165,9 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 25;
@@ -188,6 +195,27 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+/**
+  * @brief 重定向c库函数printf到USARTx
+  * @retval None
+  */
+int fputc(int ch, FILE *f)
+{
+    HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 0xffff);
+    return ch;
+}
+ 
+/**
+  * @brief 重定向c库函数getchar,scanf到USARTx
+  * @retval None
+  */
+int fgetc(FILE *f)
+{
+    uint8_t ch = 0;
+    HAL_UART_Receive(&huart1, &ch, 1, 0xffff);
+    return ch;
+}
 
 /* USER CODE END 4 */
 

@@ -212,7 +212,7 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 static bool touchpad_is_pressed(void)
 {
     /*Your code comes here*/
-    return Pen_Point.Key_Sta == Key_Down;
+    return !HAL_GPIO_ReadPin(GPIOG, GPIO_PIN_7);
     // return false;
 }
 

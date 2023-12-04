@@ -5,8 +5,6 @@
 extern uint8_t Send_command(const char *Command, uint8_t num);
 extern void set_wifi(void);
 
-extern uint8_t rx_buffer[128];
-
 #endif 
 
 
