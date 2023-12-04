@@ -93,8 +93,8 @@ uint8_t Read_ADS2(uint16_t *x, uint16_t *y) {
 // 转换结果
 // 根据触摸屏的校准参数来决定转换后的结果,保存在X0,Y0中
 uint8_t Convert_Pos(void) {
-  HAL_Delay(8);
-  if (Read_ADS2(&Pen_Point.X, &Pen_Point.Y)) {
+  // HAL_Delay(8);
+  if (Read_ADS(&Pen_Point.X, &Pen_Point.Y)) {
     //		Pen_Point.X0=Pen_Point.xfac*Pen_Point.X+Pen_Point.xoff;
     //		Pen_Point.Y0=Pen_Point.yfac*Pen_Point.Y+Pen_Point.yoff;
     Pen_Point.X0 = (float)(0.272074431) * Pen_Point.X + (short)0xFFD2;

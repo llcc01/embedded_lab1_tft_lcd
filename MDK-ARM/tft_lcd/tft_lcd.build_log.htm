@@ -22,12 +22,23 @@ Dialog DLL:      TCM.DLL V1.56.4.0
  
 <h2>Project:</h2>
 C:\Users\lc\git\embedded_lab1_tft_lcd\MDK-ARM\tft_lcd.uvprojx
-Project File Date:  11/27/2023
+Project File Date:  12/04/2023
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.19', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
 Build target 'tft_lcd'
-"tft_lcd\tft_lcd.axf" - 0 Error(s), 0 Warning(s).
+../Src/page.c(181): warning: format specifies type 'int *' but the argument has type 'int8_t *' (aka 'signed char *') [-Wformat]
+      &weather_data_array[i].high_int);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Src/page.c(184): warning: format specifies type 'int *' but the argument has type 'int8_t *' (aka 'signed char *') [-Wformat]
+      &weather_data_array[i].low_int);
+      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2 warnings generated.
+compiling page.c...
+linking...
+Program Size: Code=219976 RO-data=18656 RW-data=188 ZI-data=64812  
+FromELF: creating hex file...
+"tft_lcd\tft_lcd.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -50,7 +61,7 @@ Package Vendor: Keil
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.6.0
-Build Time Elapsed:  00:00:04
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

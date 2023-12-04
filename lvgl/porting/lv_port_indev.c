@@ -185,7 +185,7 @@ void lv_port_indev_init(void)
 static void touchpad_init(void)
 {
     /*Your code comes here*/
-    Touch_Init();
+    // Touch_Init();
 }
 
 /*Will be called by the library to read the touchpad*/

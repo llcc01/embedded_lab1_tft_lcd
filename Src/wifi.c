@@ -26,8 +26,8 @@ uint8_t Send_command(const char *Command, uint8_t num) {
 
 void set_wifi(void) {
   /*********************** 恢复出厂设置 **********************ok*/
-  Send_command(at_restore, strlen(at_restore));
-  HAL_Delay(500);
+  // Send_command(at_restore, strlen(at_restore));
+  // HAL_Delay(500);
 
   /*********************** AT **********************ok*/
   Send_command(at, strlen(at));
@@ -39,7 +39,7 @@ void set_wifi(void) {
 
   /***********************连接wifi*****************************ok*/
   Send_command(at_cwjap, strlen(at_cwjap));
-  HAL_Delay(500);
+  HAL_Delay(5000);
 
   /***********************查询IP*****************************ok*/
   Send_command(at_cipsta, strlen(at_cipsta));

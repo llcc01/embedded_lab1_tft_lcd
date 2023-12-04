@@ -8,7 +8,9 @@
         "usart.h": "c",
         "lv_demos.h": "c",
         "lv_textarea.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "page.h": "c",
+        "lv_port_indev.h": "c"
     },
     "C_Cpp.default.includePath": [
         "./Inc",

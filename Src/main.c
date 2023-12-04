@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "dma.h"
 #include "rtc.h"
 #include "spi.h"
 #include "usart.h"
@@ -31,10 +30,12 @@
 #include <stdio.h>
 #include "lvgl.h"
 #include "lv_port_disp.h"
+#include "lv_port_indev.h"
 // #include "lv_demo_benchmark.h"
 #include "lcd.h"
 #include "touch.h"
 #include "wifi.h"
+#include "page.h"
 
 /* USER CODE END Includes */
 
@@ -56,6 +57,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+
+uint8_t Buffer[1];
 
 /* USER CODE END PV */
 
@@ -98,15 +101,17 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_FSMC_Init();
   MX_SPI2_Init();
   MX_USART1_UART_Init();
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
 
+  HAL_UART_Receive_IT(&huart1, (uint8_t *)Buffer, 1);
+
   lv_init();
   lv_port_disp_init();
+  lv_port_indev_init();
 
   // HAL_TIM_Base_Start_IT(&htim2); //LED
   // HAL_TIM_Base_Start_IT(&htim3); //LVGL
@@ -115,9 +120,9 @@ int main(void)
 
   // lv_demo_benchmark();
 
-  lv_obj_t* obj_input = lv_textarea_create(lv_scr_act());
-  lv_obj_set_size(obj_input, LV_PCT(60), LV_PCT(20));
-  lv_obj_align(obj_input, LV_ALIGN_CENTER, 0, 0);
+  // lv_obj_t* obj_input = lv_textarea_create(lv_scr_act());
+  // lv_obj_set_size(obj_input, LV_PCT(60), LV_PCT(20));
+  // lv_obj_align(obj_input, LV_ALIGN_CENTER, 0, 0);
 
   lv_obj_t* obj_title = lv_label_create(lv_scr_act());
   lv_label_set_text(obj_title, "Hello World!");
@@ -125,6 +130,8 @@ int main(void)
 
   set_wifi();
 
+  update_time();
+  lv_lc_widgets();
 
   /* USER CODE END 2 */
 
@@ -137,10 +144,10 @@ int main(void)
     /* USER CODE BEGIN 3 */
     uint16_t x,y;
 
-    // TODO 读取触摸屏坐标
-    Convert_Pos();
+    // TODO 读取触摸屏坐�????
+    // Convert_Pos();
 
-    lv_label_set_text_fmt(obj_title, "Hello World! %d,%d,%d", Pen_Point.X0, Pen_Point.Y0, Pen_Point.Key_Sta);
+    // lv_label_set_text_fmt(obj_title, "Hello World! %d,%d,%d", Pen_Point.X0, Pen_Point.Y0,!HAL_GPIO_ReadPin(GPIOG, GPIO_PIN_7));
 
     lv_task_handler();
     HAL_Delay(5);
@@ -214,6 +221,7 @@ int fgetc(FILE *f)
 {
     uint8_t ch = 0;
     HAL_UART_Receive(&huart1, &ch, 1, 0xffff);
+    HAL_UART_Receive_IT(&huart1, (uint8_t *)Buffer, 1);
     return ch;
 }
 
