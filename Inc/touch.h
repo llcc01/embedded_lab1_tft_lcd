@@ -17,7 +17,7 @@ typedef struct {
   uint16_t Y0;
   uint16_t X;  // 最终/暂存坐标
   uint16_t Y;
-  // uint8_t Key_Sta;  // 笔的状态
+  uint8_t Key_Sta;  // 笔的状态
   // 触摸屏校准参数
   float xfac;
   float yfac;

@@ -60,6 +60,11 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN Private defines */
 
+#define UART_BUFFER_SIZE 1024
+extern uint8_t rx_buffer[UART_BUFFER_SIZE];
+extern uint16_t rx_head;
+extern uint16_t rx_tail;
+
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

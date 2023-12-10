@@ -116,11 +116,9 @@ void update_time() {
     putchar(udp_time[i]);
   }
 
-  // while (!(rx_data[0] = getchar()));
-
-  // for (int i = 1; i < 10; i++) {
-  //   rx_data[i] = getchar();
-  // }
+  for (int i = 1; i < 10; i++) {
+    rx_data[i] = getchar();
+  }
 
   HAL_Delay(500);
 
@@ -291,7 +289,7 @@ void time_create(lv_obj_t* parent) {
   lv_obj_t* time_date_obj =
     lv_obj_create(parent);  // 基于屏幕创建时间日期对象
 
-  lv_obj_set_size(time_date_obj, 320, 100);  // 设置对象大小
+  lv_obj_set_size(time_date_obj, 400, 150);  // 设置对象大小
   lv_obj_center(time_date_obj);              // 对象居屏幕中间显示
 
   /*Time display*/
