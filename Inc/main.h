@@ -54,13 +54,15 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 
+void rx_buffer_flush();
+
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
 
-#define UART_BUFFER_SIZE 1024
+#define UART_BUFFER_SIZE 4096
 extern uint8_t rx_buffer[UART_BUFFER_SIZE];
 extern uint16_t rx_head;
 extern uint16_t rx_tail;

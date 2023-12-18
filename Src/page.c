@@ -5,6 +5,8 @@
 #include <string.h>
 #include <usart.h>
 #include <time.h>
+#include <stdlib.h>
+
 
 #include "cJSON.h"
 #include "lvgl.h"
@@ -57,10 +59,11 @@ const uint8_t udp_time[48] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-char rx_data[2048];
+char rx_data[4096];
 time_t last_time = 0;
 
 lv_obj_t* tv;
+lv_obj_t* msg_label;
 char* weather_data;
 char* city;
 RTC_DateTypeDef rtc_date;  // 获取日期结构体
@@ -69,7 +72,7 @@ RTC_TimeTypeDef rtc_time;  // 获取时间结构体
 void get_weather() {
   /*********************** 建立TCP链接 *****************************ok*/
   printf("%s", at_cipstart_weather);
-  HAL_Delay(500);
+  HAL_Delay(1000);
 
   /*********************** 设置为单链接 *****************************ok*/
   printf("%s", at_cipmux);
@@ -86,9 +89,18 @@ void get_weather() {
   /*********************** 发送数据 *****************************ok*/
   printf("%s", http_get_weather);
 
+  rx_buffer_flush();
   /*********************** 接收数据 *****************************ok*/
   while (rx_data[0] != '{') {
-    gets(rx_data);
+    rx_data[0] = getchar();
+  }
+
+  for (int i = 1; i < 4096; i++) {
+    rx_data[i] = getchar();
+    if (rx_data[i] == '\r') {
+      rx_data[i + 1] = '\0';
+      break;
+    }
   }
 
   /*********************** 退出透传模式 *****************************ok*/
@@ -97,6 +109,11 @@ void get_weather() {
 
   /*********************** 关闭链接 *****************************ok*/
   printf("%s", at_cipclose);
+
+  HAL_Delay(500);
+
+  printf("%d ", strlen(rx_data));
+  printf("%s", rx_data);
 }
 
 void update_time() {
@@ -112,11 +129,13 @@ void update_time() {
   printf("%s", at_cipsend);
   HAL_Delay(500);
 
+  rx_buffer_flush();
+
   for (int i = 0; i < 48; i++) {
     putchar(udp_time[i]);
   }
 
-  for (int i = 1; i < 10; i++) {
+  for (int i = 0; i < 10; i++) {
     rx_data[i] = getchar();
   }
 
@@ -155,6 +174,9 @@ struct weather_data_t weather_data_array[15];
 
 void get_weather_data() {
   cJSON* root = cJSON_Parse(rx_data);
+  if (root == NULL) {
+    lv_label_set_text_fmt("Error before: [%s]\n", cJSON_GetErrorPtr());
+  }
   cJSON* data = cJSON_GetObjectItem(root, "data");
   cJSON* forecast = cJSON_GetObjectItem(data, "forecast");
   cJSON* item = NULL;
@@ -248,13 +270,16 @@ static void chart_event_cb(lv_event_t* e) {
 }
 
 void weather_create(lv_obj_t* parent) {
-  get_weather_data();
+  msg_label = lv_label_create(parent);
+
+  // get_weather_data();
 
   // chart
   lv_obj_t* chart = lv_chart_create(parent);
 
   lv_obj_set_size(chart, 400, 300);
-  lv_obj_set_align(chart, LV_ALIGN_TOP_MID);
+  // lv_obj_set_align(chart, LV_ALIGN_TOP_MID);
+  lv_obj_align_to(chart, parent, LV_ALIGN_TOP_MID, 0, 0);
 
   lv_obj_set_grid_cell(chart, LV_GRID_ALIGN_STRETCH, 1, 1,
     LV_GRID_ALIGN_STRETCH, 1, 1);
@@ -342,9 +367,10 @@ void lv_lc_widgets() {
   // LV_FONT_DECLARE(lv_font_simsun_16_cjk);
   tv = lv_tabview_create(lv_scr_act(), LV_DIR_TOP, 45);
   // lv_obj_set_style_text_font(tv, &lv_font_simsun_16_cjk, 0);
+  
 
-  lv_obj_t* tab1 = lv_tabview_add_tab(tv, "time");
   lv_obj_t* tab2 = lv_tabview_add_tab(tv, "weather");
+  lv_obj_t* tab1 = lv_tabview_add_tab(tv, "time");
 
   time_create(tab1);
   weather_create(tab2);

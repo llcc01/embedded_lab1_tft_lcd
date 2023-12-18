@@ -10,7 +10,8 @@
         "lv_textarea.h": "c",
         "stdio.h": "c",
         "page.h": "c",
-        "lv_port_indev.h": "c"
+        "lv_port_indev.h": "c",
+        "lv_demo_benchmark.h": "c"
     },
     "C_Cpp.default.includePath": [
         "./Inc",

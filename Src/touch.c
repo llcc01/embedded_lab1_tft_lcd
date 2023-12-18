@@ -105,6 +105,11 @@ uint8_t Convert_Pos(void) {
     //					return 0;
     //			}
     Pen_Point.Key_Sta = !HAL_GPIO_ReadPin(GPIOG, GPIO_PIN_7) ? Key_Down : Key_Up;
+    if (Pen_Point.X0 > 480 || Pen_Point.Y0 > 272) {
+      Pen_Point.X0 = 0;
+      Pen_Point.Y0 = 0;
+      return 0;
+    }
     return 1;
   } else
     return 0;

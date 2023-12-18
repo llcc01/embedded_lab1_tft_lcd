@@ -18,9 +18,8 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_it.h"
-
 #include "main.h"
+#include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -69,9 +68,10 @@ extern UART_HandleTypeDef huart1;
 /*           Cortex-M4 Processor Interruption and Exception Handlers          */
 /******************************************************************************/
 /**
- * @brief This function handles System tick timer.
- */
-void SysTick_Handler(void) {
+  * @brief This function handles System tick timer.
+  */
+void SysTick_Handler(void)
+{
   /* USER CODE BEGIN SysTick_IRQn 0 */
 
   /* USER CODE END SysTick_IRQn 0 */
@@ -88,9 +88,10 @@ void SysTick_Handler(void) {
 /******************************************************************************/
 
 /**
- * @brief This function handles USART1 global interrupt.
- */
-void USART1_IRQHandler(void) {
+  * @brief This function handles USART1 global interrupt.
+  */
+void USART1_IRQHandler(void)
+{
   /* USER CODE BEGIN USART1_IRQn 0 */
 
   /* USER CODE END USART1_IRQn 0 */
@@ -103,10 +104,11 @@ void USART1_IRQHandler(void) {
 /* USER CODE BEGIN 1 */
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-  if (huart->Instance == USART1) {
-    rx_head = (rx_head + 1) % UART_BUFFER_SIZE;
-    HAL_UART_Receive_IT(&huart1, (uint8_t *)rx_buffer + rx_head, 1);
+  rx_head = rx_head + 1;
+  if (rx_head >= UART_BUFFER_SIZE) {
+    rx_head = 0;
   }
+  HAL_UART_Receive_IT(&huart1, (uint8_t *)rx_buffer + rx_head, 1);
 }
 
 /* USER CODE END 1 */
