@@ -11,7 +11,9 @@
         "stdio.h": "c",
         "page.h": "c",
         "lv_port_indev.h": "c",
-        "lv_demo_benchmark.h": "c"
+        "lv_demo_benchmark.h": "c",
+        "i2c.h": "c",
+        "radio.h": "c"
     },
     "C_Cpp.default.includePath": [
         "./Inc",

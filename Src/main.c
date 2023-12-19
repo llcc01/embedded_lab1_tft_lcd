@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "i2c.h"
 #include "rtc.h"
 #include "spi.h"
 #include "usart.h"
@@ -37,6 +38,7 @@
 #include "page.h"
 #include "touch.h"
 #include "wifi.h"
+#include "radio.h"
 
 /* USER CODE END Includes */
 
@@ -108,6 +110,7 @@ int main(void)
   MX_SPI2_Init();
   MX_USART1_UART_Init();
   MX_RTC_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
   HAL_UART_Receive_IT(&huart1, (uint8_t *)rx_buffer, 1);
@@ -131,10 +134,11 @@ int main(void)
   lv_label_set_text(obj_title, "Hello World!");
   lv_obj_align(obj_title, LV_ALIGN_TOP_LEFT, 0, 0);
 
-  set_wifi();
+  // set_wifi();
 
   // get_weather();
   // update_time();
+  radio_write();
   lv_lc_widgets();
 
   /* USER CODE END 2 */
