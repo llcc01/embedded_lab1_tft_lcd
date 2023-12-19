@@ -130,9 +130,9 @@ int main(void)
   // lv_obj_set_size(obj_input, LV_PCT(60), LV_PCT(20));
   // lv_obj_align(obj_input, LV_ALIGN_CENTER, 0, 0);
 
-  lv_obj_t *obj_title = lv_label_create(lv_scr_act());
-  lv_label_set_text(obj_title, "Hello World!");
-  lv_obj_align(obj_title, LV_ALIGN_TOP_LEFT, 0, 0);
+  // lv_obj_t *obj_title = lv_label_create(lv_scr_act());
+  // lv_label_set_text(obj_title, "Hello World!");
+  // lv_obj_align(obj_title, LV_ALIGN_TOP_LEFT, 0, 0);
 
   // set_wifi();
 
