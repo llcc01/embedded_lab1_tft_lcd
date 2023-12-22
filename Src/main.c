@@ -115,15 +115,14 @@ int main(void)
 
   HAL_UART_Receive_IT(&huart1, (uint8_t *)rx_buffer, 1);
 
+  HAL_Delay(100);
+
   lv_init();
   lv_port_disp_init();
   lv_port_indev_init();
 
   // HAL_TIM_Base_Start_IT(&htim2); //LED
   // HAL_TIM_Base_Start_IT(&htim3); //LVGL
-
-  HAL_Delay(100);
-
   // lv_demo_benchmark();
 
   // lv_obj_t* obj_input = lv_textarea_create(lv_scr_act());

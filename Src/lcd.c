@@ -195,6 +195,8 @@ void lcd_init(void) {
 
   // lcd_data_bus_test();
   lcd_clear(Yellow);  // 初始化全屏填充颜色
+
+  HAL_Delay(200);
 }
 /*********************************************************************************************************
 ** Functoin name:       LCD_SetCursor

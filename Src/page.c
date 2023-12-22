@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "24c64.h"
 #include "lvgl.h"
 #include "radio.h"
 
@@ -29,15 +30,35 @@ uint32_t scan_last_freq_khz = 0;
 uint8_t scan_last_level = 0;
 uint8_t scan_searching_max = 0;
 
-void list_widgets_update(void);
+void data_read() {
+  uint16_t eepromAddress = 0;
+  for (int i = 0; i < 16; i++) {
+    freq_list[i] = readFloatFromEEPROM(eepromAddress);
+    eepromAddress += sizeof(float);
+  }
+}
+
+void data_write() {
+  uint16_t eepromAddress = 0;
+  for (int i = 0; i < 16; i++) {
+    writeFloatToEEPROM(freq_list[i], eepromAddress);
+    eepromAddress += sizeof(float);
+  }
+}
 
 void scan_stop(lv_timer_t* timer) {
   lv_timer_del(timer_scan);
   lv_obj_t* freq_scan_btn_label = timer->user_data;
   lv_label_set_text(freq_scan_btn_label, "scan");
+
+  for (int i = scan_counter; i < SCAN_MAX; i++) {
+    freq_list[i] = 0;
+  }
+
   list_widgets_update();
   freq_display_khz = freq_list[0] * 1000;
   freq_input_update();
+  data_write();
   radio_set_frequency();
 }
 
@@ -61,7 +82,7 @@ void timer_scan_event_cb(lv_timer_t* timer) {
     scan_last_level = 0;
   } else {
     if (strength.level > scan_last_level &&
-        (strength.level > 7 && strength.if_counter > 0x31 &&
+        (strength.level > 10 && strength.if_counter > 0x31 &&
          strength.if_counter < 0x3e)) {
       scan_last_level = strength.level;
       scan_last_freq_khz = freq_display_khz;
@@ -164,14 +185,15 @@ void freq_scan_event_cb(lv_event_t* e) {
 
 void list_widgets(lv_obj_t* parent) {
   lv_obj_t* list = lv_obj_create(parent);
-  lv_obj_set_size(list, 400, 120);
-  lv_obj_align_to(list, freq_input, LV_ALIGN_OUT_BOTTOM_MID, 0, 60);
+  lv_obj_set_size(list, 400, 160);
+  lv_obj_align_to(list, freq_input, LV_ALIGN_OUT_BOTTOM_MID, 0, 20);
 
   static lv_coord_t col_dsc[] = {80, 80, 80, 80, LV_GRID_TEMPLATE_LAST};
   static lv_coord_t row_dsc[] = {40, 40, 40, 40, LV_GRID_TEMPLATE_LAST};
 
   lv_obj_set_grid_dsc_array(list, col_dsc, row_dsc);
 
+  data_read();
   for (int i = 0; i < SCAN_MAX; i++) {
     list_btns[i] = lv_btn_create(list);
     lv_obj_set_size(list_btns[i], 70, 40);
@@ -214,27 +236,27 @@ void lv_lc_widgets(void) {
 
   freq_input_label = lv_label_create(frame);
   lv_label_set_text(freq_input_label, "MHz");
-  lv_obj_align_to(freq_input_label, freq_input, LV_ALIGN_OUT_RIGHT_MID, 0, 0);
-
-  lv_obj_t* freq_up_btn = lv_btn_create(frame);
-  lv_obj_t* freq_up_label = lv_label_create(freq_up_btn);
-  lv_label_set_text(freq_up_label, "->");
-  lv_obj_add_event_cb(freq_up_btn, freq_up_event_cb, LV_EVENT_CLICKED, NULL);
-  lv_obj_align_to(freq_up_btn, freq_input, LV_ALIGN_OUT_BOTTOM_MID, 150, 10);
+  lv_obj_align_to(freq_input_label, freq_input, LV_ALIGN_OUT_RIGHT_MID, 20, 0);
 
   lv_obj_t* freq_scan_btn = lv_btn_create(frame);
   lv_obj_t* freq_scan_label = lv_label_create(freq_scan_btn);
   lv_obj_add_event_cb(freq_scan_btn, freq_scan_event_cb, LV_EVENT_CLICKED,
                       NULL);
   lv_label_set_text(freq_scan_label, "scan");
-  lv_obj_align_to(freq_scan_btn, freq_input, LV_ALIGN_OUT_BOTTOM_MID, 0, 10);
+  lv_obj_align_to(freq_scan_btn, freq_input, LV_ALIGN_OUT_LEFT_MID, -20, 0);
+
+  lv_obj_t* freq_up_btn = lv_btn_create(frame);
+  lv_obj_t* freq_up_label = lv_label_create(freq_up_btn);
+  lv_label_set_text(freq_up_label, "->");
+  lv_obj_add_event_cb(freq_up_btn, freq_up_event_cb, LV_EVENT_CLICKED, NULL);
+  lv_obj_align_to(freq_up_btn, freq_input, LV_ALIGN_OUT_RIGHT_MID, 100, 0);
 
   lv_obj_t* freq_down_btn = lv_btn_create(frame);
   lv_obj_t* freq_down_label = lv_label_create(freq_down_btn);
   lv_label_set_text(freq_down_label, "<-");
   lv_obj_add_event_cb(freq_down_btn, freq_down_event_cb, LV_EVENT_CLICKED,
                       NULL);
-  lv_obj_align_to(freq_down_btn, freq_input, LV_ALIGN_OUT_BOTTOM_MID, -150, 10);
+  lv_obj_align_to(freq_down_btn, freq_input, LV_ALIGN_OUT_LEFT_MID, -100, 0);
 
   list_widgets(frame);
 }

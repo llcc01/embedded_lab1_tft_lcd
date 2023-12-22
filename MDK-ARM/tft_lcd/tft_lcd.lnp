@@ -14,6 +14,7 @@
 "tft_lcd\stm32f4xx_it.o"
 "tft_lcd\stm32f4xx_hal_msp.o"
 "tft_lcd\radio.o"
+"tft_lcd\24c64.o"
 "tft_lcd\stm32f4xx_ll_fsmc.o"
 "tft_lcd\stm32f4xx_hal_rcc.o"
 "tft_lcd\stm32f4xx_hal_rcc_ex.o"

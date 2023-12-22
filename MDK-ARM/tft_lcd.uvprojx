@@ -668,6 +668,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\radio.c</FilePath>
             </File>
+            <File>
+              <FileName>24c64.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\24c64.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
